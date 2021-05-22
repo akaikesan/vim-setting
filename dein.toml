@@ -1,0 +1,30 @@
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+
+
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+
+
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+
+
+[[plugins]]
+repo ='carlitux/deoplete-ternjs'
+hook_post_update = '''
+  call system ('npm install -g tern')
+'''
+hook_add = '''
+let g:deoplete#sources#ternjs#filetypes = [
+    \ 'jsx',
+    \ 'javascript.jsx',
+    \ 'vue',
+    \ ]
+'''
