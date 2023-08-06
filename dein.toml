@@ -1,9 +1,8 @@
+# build/index.js not found, please install dependencies and compile coc.nvim by: yarn install
+# call coc#util#install
+
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
-
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
 
 
 
@@ -16,15 +15,73 @@ repo = 'roxma/nvim-yarp'
 repo = 'roxma/vim-hug-neovim-rpc'
 
 
+
+
 [[plugins]]
-repo ='carlitux/deoplete-ternjs'
-hook_post_update = '''
-  call system ('npm install -g tern')
-'''
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+
+[[plugins]] # lint tool
+repo = 'dense-analysis/ale'
 hook_add = '''
-let g:deoplete#sources#ternjs#filetypes = [
-    \ 'jsx',
-    \ 'javascript.jsx',
-    \ 'vue',
-    \ ]
+"行頭のマークが出る部分を常に表示するようにする
+let g:ale_sign_column_always = 1
+"phpcsのスタイル
+"let g:ale_php_phpcs_standard = '~/phpcs.xml,PSR1,PSR2'
+"phpcbfのスタイル
+"let g:ale_php_phpcbf_standard = '~/phpcs.xml'
+
+"自動整形 ここで指定しないと保存時に自動で整形されないよ！
+let g:ale_fixers = {
+\   'typescript': ['prettier'],
+\   'typescriptreact': ['prettier'],
+\   'javascript': ['prettier'],
+\   'javascriptreact': ['prettier'],
+\   'css': ['prettier'],
+\}
+"ファイル保存時に整形実行
+let g:ale_fix_on_save = 1
+" 保存時のみ実行する
+let g:ale_lint_on_text_changed = 1 
+"lint
+let g:ale_linters = {
+  \'javascript': ['eslint', 'prettier'],
+  \'typescript': [ 'eslint','prettier'],
+  \'ruby': ['rubocop', 'reek'],
+  \'php': ['phpcs', 'phpcbf'],
+  \'Dockerfile': ['dockerfile_lint', 'hadolint'],
+  \'scss': ['stylelint']
+\}
+let g:ale_dockerfile_hadolint_use_docker = 'enable'
+let g:ale_scss_stylelint_use_global = 1
+" 表示に関する設定
+ let g:ale_sign_error = '⨉'
+ let g:ale_sign_warning = '⚠'
+let g:airline#extensions#ale#open_lnum_symbol = '('
+let g:airline#extensions#ale#close_lnum_symbol = ')'
+" エラー行にカーソルをあわせた際に表示されるメッセージフォーマット
+let g:ale_echo_msg_format = '[%linter%]%code: %%s'
+let g:ale_python_python_executable = 'python3'
+highlight link ALEErrorSign Tag
+highlight link ALEWarningSign StorageClass
+" Ctrl + jで次の指摘へ、Ctrl + kで前の指摘へ移動
+nmap <silent> <C-w>k <Plug>(ale_previous_wrap)
+nmap <silent> <C-w>j <Plug>(ale_next_wrap)
 '''
+
+hook_post_source = '''
+let g:ale_linters = {
+  \'Dockerfile': ['dockerfile_lint', 'hadolint']
+\}
+'''
+
+[[plugins]]
+repo='lambdalisue/readablefold.vim'
+
+
+[[plugins]]
+repo='github/copilot.vim'
+
+
